@@ -528,8 +528,7 @@ def solve():
             a = start_dt.day
             b = a + T
 
-            d = (b - a) / (len(prices) - 1) if len(prices) > 1 else 1.0
-            w = _compute_omega(prices, d=d)
+            w = _compute_omega(prices, d=1.0)
             result = solve_m1(a, b, ya, yb, N, w)
             result['actualStart'] = actual_start
             result['actualEnd']   = actual_end
