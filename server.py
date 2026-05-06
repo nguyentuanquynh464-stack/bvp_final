@@ -397,43 +397,29 @@ def solve_m3(r1, T1, r2, T2, N):
     sm  = g_sm(r1, r2, T1, T2, N, lambda r, y: [y[1], -(2 / r) * y[1]], -1.0, 1.0)
     fem = g_fem(r1, r2, T1, T2, N, lambda r: 2 / r, lambda r: 0.0, lambda r: 0.0)
 
-    rk5_main = rk5_m3(r1, T1, r2, T2, N)
-
     tEx = linspace(r1, r2, 200)
     yEx = [yE(r) for r in tEx]
 
-    # MMS cho FDM: thêm hạng sin vào nghiệm giải tích (giống err_FDM trong mô hình nhiệt lõi.py)
-    C_mms = 100.0
-    L = r2 - r1
-
-    def f_mms(r, _C=C_mms, _L=L, _r1=r1):
-        return _C * (-(math.pi / _L) ** 2 * math.sin(math.pi * (r - _r1) / _L)
-                     + 2 * math.pi / (r * _L) * math.cos(math.pi * (r - _r1) / _L))
-
-    def y_mms(r, _C1=C1, _C2=C2, _C=C_mms, _L=L, _r1=r1):
-        return _C1 / r + _C2 + _C * math.sin(math.pi * (r - _r1) / _L)
-
-    # Phân tích hội tụ
+    # Phân tích hội tụ — cả 3 phương pháp so với nghiệm chính xác
     N_conv = [5, 9, 17, 33, 65, 129, 257]
     conv_data = []
     for Ni in N_conv:
-        fi = g_fdm(r1, r2, T1, T2, Ni, f_mms, lambda r: 0.0, lambda r: -2 / r)
+        fi = g_fdm(r1, r2, T1, T2, Ni, lambda r: 0.0, lambda r: 0.0, lambda r: -2 / r)
         si = g_sm(r1, r2, T1, T2, Ni, lambda r, y: [y[1], -(2 / r) * y[1]], -1.0, 1.0)
         ei = g_fem(r1, r2, T1, T2, Ni, lambda r: 2 / r, lambda r: 0.0, lambda r: 0.0, nq=20)
-        rk5_i = rk5_m3(r1, T1, r2, T2, Ni)
         conv_data.append({
             'N': Ni,
-            'eF': calc_err(fi['y'], fi['t'], y_mms),
-            'eS': max(abs(si['y'][k] - rk5_i[k]) for k in range(Ni)),
-            'eE': max(abs(ei['y'][k] - rk5_i[k]) for k in range(Ni)),
+            'eF': calc_err(fi['y'], fi['t'], yE),
+            'eS': calc_err(si['y'], si['t'], yE),
+            'eE': calc_err(ei['y'], ei['t'], yE),
         })
 
     return {
         'fdm': fdm, 'sm': sm, 'fem': fem,
         'tEx': tEx, 'yEx': yEx,
         'eF': calc_err(fdm['y'], fdm['t'], yE),
-        'eS': max(abs(sm['y'][k]  - rk5_main[k]) for k in range(N)),
-        'eE': max(abs(fem['y'][k] - rk5_main[k]) for k in range(N)),
+        'eS': calc_err(sm['y'],  sm['t'],  yE),
+        'eE': calc_err(fem['y'], fem['t'], yE),
         'C1': C1, 'C2': C2,
         'convData': conv_data,
     }

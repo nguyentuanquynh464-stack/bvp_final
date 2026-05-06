@@ -19,14 +19,12 @@ echo [3/4] Applying PWA patch...
 call node scripts/patch-web.js
 
 echo.
-echo [4/4] Deploying to Netlify...
-call npx netlify-cli deploy --dir dist --prod ^
-  --auth nfp_t6UWP478LPKsEdPTvWsw8oiJLBD8p6kBa582 ^
-  --site b2cee7b3-f730-4eef-b9e8-c22f9fa1e20c
+echo [4/4] Deploying to Vercel...
+call vercel dist --prod --yes
 
 echo.
 echo ========================================
 echo   Deploy complete!
-echo   https://harmonious-otter-e9266f.netlify.app
+echo   https://dist-tau-eight-81.vercel.app
 echo ========================================
 pause

@@ -7,7 +7,7 @@ redirects = []
 [functions."*"]
 
 [build]
-publish = "C:\\Users\\ngduc\\Desktop\\final\\BVPSolver\\dist"
+publish = "C:\\BVP\\BVP\\final\\BVPSolver\\dist"
 publishOrigin = "config"
 commandOrigin = "ui"
 
