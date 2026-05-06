@@ -64,7 +64,7 @@ export default function InputScreen({ route, navigation }) {
       basePayload = { modelId: 4, K0: pf(v4a), KT: pf(v4b), Te: pf(v4t) };
     }
 
-    const SERVER = 'https://bvp-iud7.onrender.com';
+    const SERVER = 'https://bvp-final.onrender.com';
     const makeFetch = (n) => fetch(`${SERVER}/solve`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
