@@ -530,9 +530,7 @@ def solve():
 
             d = (b - a) / (len(prices) - 1) if len(prices) > 1 else 1.0
             w = _compute_omega(prices, d=d)
-            mu = sum(prices) / len(prices)
-
-            result = solve_m1(a, b, ya, yb, N, w, mu=mu)
+            result = solve_m1(a, b, ya, yb, N, w)
             result['actualStart'] = actual_start
             result['actualEnd']   = actual_end
         elif model_id == 2:
