@@ -222,8 +222,6 @@ export default function InputScreen({ route, navigation }) {
               {modelId === 1 && (
                 <>
                   <Text style={{ fontSize: 14, color: th.tx, fontWeight: '600' }}>x″(t) + ω²x(t) = 0</Text>
-                  <Text style={{ fontSize: 13, color: th.ts }}>x(a) = y(a)</Text>
-                  <Text style={{ fontSize: 13, color: th.ts }}>x(b) = y(b)</Text>
                   <View style={{ marginTop: 2, paddingTop: 6, borderTopWidth: 1, borderTopColor: th.bdr }}>
                     <Text style={{ fontSize: 12, color: th.ac }}>ω tính tự động từ FFT chuỗi giá DJI</Text>
                   </View>
