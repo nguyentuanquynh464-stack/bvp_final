@@ -225,7 +225,7 @@ export default function InputScreen({ route, navigation }) {
                   <Text style={{ fontSize: 13, color: th.ts }}>x(a) = y(a)</Text>
                   <Text style={{ fontSize: 13, color: th.ts }}>x(b) = y(b)</Text>
                   <View style={{ marginTop: 2, paddingTop: 6, borderTopWidth: 1, borderTopColor: th.bdr }}>
-                    <Text style={{ fontSize: 12, color: th.ac }}>ω = 3π / (2(b − a))</Text>
+                    <Text style={{ fontSize: 12, color: th.ac }}>ω tính tự động từ FFT chuỗi giá DJI</Text>
                   </View>
                 </>
               )}
