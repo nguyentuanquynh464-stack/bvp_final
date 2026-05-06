@@ -1,0 +1,133 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <!--
+    Coordinate mapping from BVPLogo.js (viewBox "140 20 400 522"):
+      scale  = 1024 / 522 ≈ 1.962
+      x_icon = (x_bvp - 140) * 1.962 + 120
+      y_icon = (y_bvp -  20) * 1.962
+    Card spans x: 120 → 905  (785 px wide, centered in 1024)
+               y:   0 → 1024
+  -->
+
+  <defs>
+    <clipPath id="card">
+      <rect x="120" y="0" width="785" height="1024" rx="71"/>
+    </clipPath>
+  </defs>
+
+  <!-- Shadow -->
+  <rect x="128" y="10" width="785" height="1024" rx="71" fill="#C8D4E8"/>
+
+  <!-- Card background -->
+  <rect x="120" y="0" width="785" height="1024" rx="71" fill="#FFFFFF"/>
+
+  <g clip-path="url(#card)">
+
+    <!-- Concentric circles – bottom-right, partially clipped (cx≈838 cy≈746) -->
+    <circle cx="838" cy="746" r="226" fill="none" stroke="#E8EEF8" stroke-width="35"/>
+    <circle cx="838" cy="746" r="163" fill="none" stroke="#DDE5F5" stroke-width="27"/>
+    <circle cx="838" cy="746" r="104" fill="none" stroke="#D0DBF0" stroke-width="22"/>
+    <circle cx="838" cy="746" r="51"  fill="#DDE5F5"/>
+
+    <!-- FEM triangular fill polygons -->
+    <polygon points="267,540 339,339 267,677" fill="#EEF2FA" stroke="#D8E2F2" stroke-width="2"/>
+    <polygon points="339,339 339,677 267,677" fill="#F2F5FC" stroke="#D8E2F2" stroke-width="2"/>
+    <polygon points="339,339 416,214 339,677" fill="#EEF2FA" stroke="#D8E2F2" stroke-width="2"/>
+    <polygon points="416,214 416,677 339,677" fill="#F2F5FC" stroke="#D8E2F2" stroke-width="2"/>
+    <polygon points="416,214 502,163 416,677" fill="#EEF2FA" stroke="#D8E2F2" stroke-width="2"/>
+    <polygon points="502,163 502,677 416,677" fill="#F2F5FC" stroke="#D8E2F2" stroke-width="2"/>
+    <polygon points="502,163 588,181 502,677" fill="#EEF2FA" stroke="#D8E2F2" stroke-width="2"/>
+    <polygon points="588,181 588,677 502,677" fill="#F2F5FC" stroke="#D8E2F2" stroke-width="2"/>
+    <polygon points="588,181 683,267 588,677" fill="#EEF2FA" stroke="#D8E2F2" stroke-width="2"/>
+    <polygon points="683,267 683,677 588,677" fill="#F2F5FC" stroke="#D8E2F2" stroke-width="2"/>
+    <polygon points="683,267 757,412 683,677" fill="#EEF2FA" stroke="#D8E2F2" stroke-width="2"/>
+    <polygon points="757,412 757,677 683,677" fill="#F2F5FC" stroke="#D8E2F2" stroke-width="2"/>
+
+    <!-- Axes -->
+    <line x1="198" y1="677" x2="822" y2="677" stroke="#003DA5" stroke-width="3" stroke-linecap="round"/>
+    <line x1="198" y1="114" x2="198" y2="677" stroke="#003DA5" stroke-width="3" stroke-linecap="round"/>
+
+    <!-- Axis arrows -->
+    <polygon points="822,677 806,667 806,687" fill="#003DA5"/>
+    <polygon points="198,114 188,130 208,130" fill="#003DA5"/>
+
+    <!-- Axis labels -->
+    <text x="832" y="690" font-family="'Courier New',monospace" font-size="28" font-style="italic" fill="#003DA5">t</text>
+    <text x="198" y="106" font-family="'Courier New',monospace" font-size="28" font-style="italic" fill="#003DA5" text-anchor="middle">y</text>
+
+    <!-- a, b dashed vertical lines -->
+    <line x1="267" y1="118" x2="267" y2="677" stroke="#99B3D8" stroke-width="2" stroke-dasharray="10,8"/>
+    <line x1="757" y1="118" x2="757" y2="677" stroke="#99B3D8" stroke-width="2" stroke-dasharray="10,8"/>
+
+    <!-- a, b axis labels -->
+    <text x="267" y="706" font-family="'Courier New',monospace" font-size="24" font-style="italic" fill="#003DA5" text-anchor="middle">a</text>
+    <text x="757" y="706" font-family="'Courier New',monospace" font-size="24" font-style="italic" fill="#003DA5" text-anchor="middle">b</text>
+
+    <!-- Shooting curves (dashed) -->
+    <path d="M 267,540 C 396,357 564,141 757,121" fill="none" stroke="#99B3D8" stroke-width="2.5" stroke-dasharray="14,10"/>
+    <path d="M 267,540 C 408,593 604,659 757,643" fill="none" stroke="#99B3D8" stroke-width="2.5" stroke-dasharray="14,10"/>
+    <text x="222" y="290" font-family="'Courier New',monospace" font-size="22" fill="#6688BB">Shooting</text>
+
+    <!-- BVP curve fill -->
+    <path d="M 267,540 C 404,59 581,59 757,412 L 757,677 L 267,677 Z" fill="#CC0000" opacity="0.05"/>
+
+    <!-- BVP curve – main red stroke -->
+    <path d="M 267,540 C 404,59 581,59 757,412" fill="none" stroke="#CC0000" stroke-width="8.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 267,540 C 404,59 581,59 757,412" fill="none" stroke="#FF6666" stroke-width="2.7" stroke-linecap="round" opacity="0.4"/>
+
+    <!-- Tick marks on x-axis -->
+    <line x1="339" y1="671" x2="339" y2="683" stroke="#003DA5" stroke-width="2.4"/>
+    <line x1="416" y1="671" x2="416" y2="683" stroke="#003DA5" stroke-width="2.4"/>
+    <line x1="502" y1="671" x2="502" y2="683" stroke="#003DA5" stroke-width="2.4"/>
+    <line x1="588" y1="671" x2="588" y2="683" stroke="#003DA5" stroke-width="2.4"/>
+    <line x1="683" y1="671" x2="683" y2="683" stroke="#003DA5" stroke-width="2.4"/>
+
+    <!-- Method labels -->
+    <text x="740" y="314" font-family="'Courier New',monospace" font-size="22" fill="#6688BB" text-anchor="end">FDM</text>
+    <text x="222" y="645" font-family="'Courier New',monospace" font-size="22" fill="#6688BB">FEM</text>
+
+    <!-- FDM hollow dots on curve -->
+    <circle cx="339" cy="339" r="9" fill="#FFFFFF" stroke="#003DA5" stroke-width="3.7"/>
+    <circle cx="416" cy="214" r="9" fill="#FFFFFF" stroke="#003DA5" stroke-width="3.7"/>
+    <circle cx="502" cy="163" r="9" fill="#FFFFFF" stroke="#003DA5" stroke-width="3.7"/>
+    <circle cx="588" cy="181" r="9" fill="#FFFFFF" stroke="#003DA5" stroke-width="3.7"/>
+    <circle cx="683" cy="267" r="9" fill="#FFFFFF" stroke="#003DA5" stroke-width="3.7"/>
+
+    <!-- Boundary points α, β -->
+    <circle cx="267" cy="540" r="20" fill="#CC0000"/>
+    <circle cx="267" cy="540" r="11" fill="#FFFFFF"/>
+    <circle cx="757" cy="412" r="20" fill="#CC0000"/>
+    <circle cx="757" cy="412" r="11" fill="#FFFFFF"/>
+
+    <!-- α, β labels -->
+    <text x="241" y="533" font-family="serif" font-size="33" font-style="italic" fill="#CC0000" text-anchor="end">α</text>
+    <text x="783" y="405" font-family="serif" font-size="33" font-style="italic" fill="#CC0000">β</text>
+
+    <!-- BVP equation at top -->
+    <text x="512" y="74" font-family="'Courier New',monospace" font-size="22" fill="#6688BB" text-anchor="middle">y'' + p(t)·y' + q(t)·y = r(t)</text>
+
+    <!-- h bracket -->
+    <line x1="339" y1="702" x2="416" y2="702" stroke="#99B3D8" stroke-width="1.8"/>
+    <line x1="339" y1="696" x2="339" y2="708" stroke="#99B3D8" stroke-width="1.8"/>
+    <line x1="416" y1="696" x2="416" y2="708" stroke="#99B3D8" stroke-width="1.8"/>
+    <text x="377" y="728" font-family="'Courier New',monospace" font-size="22" font-style="italic" fill="#6688BB" text-anchor="middle">h</text>
+
+    <!-- Divider bars -->
+    <rect x="149" y="752" width="726" height="7"  rx="3" fill="#CC0000"/>
+    <rect x="149" y="763" width="726" height="4"  rx="2" fill="#003DA5"/>
+
+    <!-- BVPSolver title -->
+    <text x="269" y="858" font-family="'Courier New',monospace" font-size="90" font-weight="700" fill="#003DA5">BVP</text>
+    <text x="431" y="858" font-family="'Courier New',monospace" font-size="90" font-weight="700" fill="#CC0000">Solver</text>
+
+    <!-- Thin separator line -->
+    <line x1="202" y1="878" x2="822" y2="878" stroke="#D0D8E8" stroke-width="2"/>
+
+    <!-- Subtitles -->
+    <text x="512" y="918" font-family="'Courier New',monospace" font-size="24" fill="#6688BB" text-anchor="middle" letter-spacing="4">Boundary Value Problems</text>
+    <text x="512" y="962" font-family="'Courier New',monospace" font-size="22" fill="#CC0000" text-anchor="middle" letter-spacing="2">TON DUC THANG UNIVERSITY</text>
+
+  </g>
+
+  <!-- Card border on top -->
+  <rect x="120" y="0" width="785" height="1024" rx="71" fill="none" stroke="#003DA5" stroke-width="4"/>
+</svg>
