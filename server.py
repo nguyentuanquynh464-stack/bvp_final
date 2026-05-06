@@ -397,16 +397,7 @@ def solve_m3(r1, T1, r2, T2, N):
     sm  = g_sm(r1, r2, T1, T2, N, lambda r, y: [y[1], -(2 / r) * y[1]], -1.0, 1.0)
     fem = g_fem(r1, r2, T1, T2, N, lambda r: 2 / r, lambda r: 0.0, lambda r: 0.0)
 
-    # RK5 fine grid dùng làm reference cho SM và FEM
-    N_rk5 = max(N * 10, 1001)
-    rk5_fine = rk5_m3(r1, T1, r2, T2, N_rk5)
-
-    def yRK5(r_val, _y=rk5_fine, _r1=r1, _r2=r2, _n=N_rk5):
-        idx = (r_val - _r1) / (_r2 - _r1) * (_n - 1)
-        i0 = int(idx)
-        i1 = min(i0 + 1, _n - 1)
-        frac = idx - i0
-        return _y[i0] * (1 - frac) + _y[i1] * frac
+    rk5_main = rk5_m3(r1, T1, r2, T2, N)
 
     tEx = linspace(r1, r2, 200)
     yEx = [yE(r) for r in tEx]
@@ -441,8 +432,8 @@ def solve_m3(r1, T1, r2, T2, N):
         'fdm': fdm, 'sm': sm, 'fem': fem,
         'tEx': tEx, 'yEx': yEx,
         'eF': calc_err(fdm['y'], fdm['t'], yE),
-        'eS': calc_err(sm['y'],  sm['t'],  yRK5),
-        'eE': calc_err(fem['y'], fem['t'], yRK5),
+        'eS': max(abs(sm['y'][k]  - rk5_main[k]) for k in range(N)),
+        'eE': max(abs(fem['y'][k] - rk5_main[k]) for k in range(N)),
         'C1': C1, 'C2': C2,
         'convData': conv_data,
     }
