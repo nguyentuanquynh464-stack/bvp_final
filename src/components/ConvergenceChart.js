@@ -77,7 +77,7 @@ export default function ConvergenceChart({ convData, mode, domainLen, isDark, sk
   const yMin = Math.min(...allY) * 0.35;
   const yMax = Math.max(...allY) * 3;
 
-  const xMin = xRawMin;
+  const xMin = isOrder ? xRawMin : 0;
   const xMax = xRawMax;
 
   if (!isFinite(xMin) || !isFinite(xMax) || !isFinite(yMin) || !isFinite(yMax) || yMin <= 0) return null;
