@@ -286,6 +286,36 @@ def solve_m1(a, b, ya, yb, N, w, mu=0.0):
     tEx = linspace(a, b, 300)
     yEx = [yE(v) for v in tEx]
 
+    T_domain = b - a
+    # N_min where hω < 1 (well into asymptotic regime for FDM/FEM)
+    N_min_stable = max(5, int(math.ceil(T_domain * w)) + 2)
+    N_conv = []
+    nv = N_min_stable
+    while nv <= 1025 and len(N_conv) < 7:
+        N_conv.append(nv)
+        nv = nv * 2 - 1
+    # fallback: relax to hω < √2 if too few points
+    if len(N_conv) < 3:
+        N_min_fb = max(5, int(math.ceil(T_domain * w / math.sqrt(2))) + 2)
+        N_conv = []
+        nv = N_min_fb
+        while nv <= 1025 and len(N_conv) < 7:
+            N_conv.append(nv)
+            nv = nv * 2 - 1
+
+    conv_data = []
+    for Ni in N_conv:
+        n_sm_i = max(Ni, int(w * T_domain) + 2)
+        fi = g_fdm(a, b, ya_s, yb_s, Ni, lambda t: 0.0, lambda t: -w * w, lambda t: 0.0)
+        si = g_sm(a, b, ya_s, yb_s, Ni, lambda t, y: [y[1], -w * w * y[0]], -sScale, sScale, n_int=n_sm_i)
+        ei = g_fem(a, b, ya_s, yb_s, Ni, lambda t: 0.0, lambda t: w * w, lambda t: 0.0)
+        conv_data.append({
+            'N': Ni,
+            'eF': calc_err([v + mu for v in fi['y']], fi['t'], yE),
+            'eS': calc_err([v + mu for v in si['y']], si['t'], yE),
+            'eE': calc_err([v + mu for v in ei['y']], ei['t'], yE),
+        })
+
     return {
         'fdm': fdm, 'sm': sm, 'fem': fem,
         'tEx': tEx, 'yEx': yEx,
@@ -294,6 +324,7 @@ def solve_m1(a, b, ya, yb, N, w, mu=0.0):
         'eE': calc_err(fem['y'], fem['t'], yE),
         'w': w, 'Ac': Ac, 'Bc': Bc, 'mu': mu,
         'a': a, 'b': b, 'ya': ya, 'yb': yb,
+        'convData': conv_data,
     }
 
 def solve_m2(mV, kV, Aa, N):

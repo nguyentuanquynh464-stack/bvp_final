@@ -71,15 +71,23 @@ export default function InputScreen({ route, navigation }) {
       body: JSON.stringify({ ...basePayload, N: n }),
     }).then(r => r.json()).catch(() => null);
 
-    // Model 3: server computes convData with MMS internally — single request only
-    if (modelId === 3) {
+    // Model 1 & 3: server computes convData internally — single request only
+    if (modelId === 1 || modelId === 3) {
       try {
         setSolving(true);
         const data = await makeFetch(N);
         if (!data || data.error) throw new Error(data?.error || 'Lỗi kết nối server');
-        const { C1, C2 } = data;
-        const yExact = r => C1 / r + C2;
-        navigation.navigate('Result', { results: { ...data, yExact } });
+        let yExact;
+        if (modelId === 1) {
+          const { w, Ac, Bc, mu: mu1 } = data;
+          yExact = t => Ac * Math.cos(w * t) + Bc * Math.sin(w * t) + (mu1 || 0);
+        } else {
+          const { C1, C2 } = data;
+          yExact = r => C1 / r + C2;
+        }
+        const res = { ...data, yExact };
+        if (modelId === 1) { res.startDate = startDate; res.endDate = endDate; }
+        navigation.navigate('Result', { results: res });
       } catch (err) {
         Alert.alert('Lỗi kết nối server', err.message);
       } finally {
