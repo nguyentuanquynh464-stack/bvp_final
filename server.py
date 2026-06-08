@@ -400,18 +400,30 @@ def solve_m3(r1, T1, r2, T2, N):
     tEx = linspace(r1, r2, 200)
     yEx = [yE(r) for r in tEx]
 
-    # Phân tích hội tụ — cả 3 phương pháp so với nghiệm chính xác
+    # MMS convergence analysis: y_mms = C1/r + C2 + C_mms*sin(pi*(r-r1)/L)
+    # Boundary conditions unchanged since sin(0)=sin(pi)=0
+    L = r2 - r1
+    C_mms = max(abs(T1 - T2), 1.0) * 0.05
+
+    def y_mms(r, _C1=C1, _C2=C2, _Cm=C_mms, _r1=r1, _L=L):
+        return _C1/r + _C2 + _Cm * math.sin(math.pi * (r - _r1) / _L)
+
+    def f_mms(r, _Cm=C_mms, _r1=r1, _L=L):
+        return _Cm * (-(math.pi/_L)**2 * math.sin(math.pi*(r-_r1)/_L)
+                      + 2*math.pi/(r*_L) * math.cos(math.pi*(r-_r1)/_L))
+
     N_conv = [5, 9, 17, 33, 65, 129, 257]
     conv_data = []
     for Ni in N_conv:
-        fi = g_fdm(r1, r2, T1, T2, Ni, lambda r: 0.0, lambda r: 0.0, lambda r: -2 / r)
-        si = g_sm(r1, r2, T1, T2, Ni, lambda r, y: [y[1], -(2 / r) * y[1]], -1.0, 1.0)
-        ei = g_fem(r1, r2, T1, T2, Ni, lambda r: 2 / r, lambda r: 0.0, lambda r: 0.0, nq=20)
+        fi = g_fdm(r1, r2, T1, T2, Ni, f_mms, lambda r: 0.0, lambda r: -2/r)
+        si = g_sm(r1, r2, T1, T2, Ni,
+                  lambda r, y: [y[1], -(2/r)*y[1] + f_mms(r)], -1.0, 1.0)
+        ei = g_fem(r1, r2, T1, T2, Ni, lambda r: 2/r, lambda r: 0.0, f_mms, nq=20)
         conv_data.append({
             'N': Ni,
-            'eF': calc_err(fi['y'], fi['t'], yE),
-            'eS': calc_err(si['y'], si['t'], yE),
-            'eE': calc_err(ei['y'], ei['t'], yE),
+            'eF': calc_err(fi['y'], fi['t'], y_mms),
+            'eS': calc_err(si['y'], si['t'], y_mms),
+            'eE': calc_err(ei['y'], ei['t'], y_mms),
         })
 
     return {
