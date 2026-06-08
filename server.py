@@ -287,11 +287,12 @@ def solve_m1(a, b, ya, yb, N, w, mu=0.0):
     yEx = [yE(v) for v in tEx]
 
     T_domain = b - a
+    N_MAX = 257  # cap giữ cho solve_gen (O(N²) pure Python) không treo server
     # N_min where hω < 1 (well into asymptotic regime for FDM/FEM)
     N_min_stable = max(5, int(math.ceil(T_domain * w)) + 2)
     N_conv = []
     nv = N_min_stable
-    while nv <= 1025 and len(N_conv) < 7:
+    while nv <= N_MAX and len(N_conv) < 7:
         N_conv.append(nv)
         nv = nv * 2 - 1
     # fallback: relax to hω < √2 if too few points
@@ -299,7 +300,7 @@ def solve_m1(a, b, ya, yb, N, w, mu=0.0):
         N_min_fb = max(5, int(math.ceil(T_domain * w / math.sqrt(2))) + 2)
         N_conv = []
         nv = N_min_fb
-        while nv <= 1025 and len(N_conv) < 7:
+        while nv <= N_MAX and len(N_conv) < 7:
             N_conv.append(nv)
             nv = nv * 2 - 1
 
